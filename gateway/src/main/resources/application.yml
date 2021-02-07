@@ -1,0 +1,23 @@
+server:
+  port: 8082
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8081/eureka
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: authenticationService
+          uri: lb://AUTHENTICATION-SERVICE
+          predicates:
+            - Path=/login/**
+            - Path=/register/**
+        - id: userService
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user/**

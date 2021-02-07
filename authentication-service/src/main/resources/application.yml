@@ -1,0 +1,16 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: user
+      username: root
+      password: root
+
+security:
+  jwt:
+    token:
+      secretKey: abcdef123456xy??a??AAAAA?adacvcbcbcbcbcbc
+      expirationInDays: 7
+      prefix: Bearer
+      header: Authorization
