@@ -17,11 +17,6 @@ public class PublicController {
         this.userService = userService;
     }
 
-    @GetMapping("login")
-    public ResponseEntity<Boolean> login(UserDTO userDTO) {
-        return userService.login(userDTO);
-    }
-
     @PostMapping("signup")
     public ResponseEntity<Boolean> signup() {
         return null;
