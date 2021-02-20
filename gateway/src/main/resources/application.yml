@@ -4,20 +4,24 @@ server:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8081/eureka
+      defaultZone: http://localhost:8761/eureka
+    register-with-eureka: true
+    fetch-registry: true
 
 spring:
   application:
     name: gateway
-  cloud:
-    gateway:
-      routes:
-        - id: authenticationService
-          uri: lb://AUTHENTICATION-SERVICE
-          predicates:
-            - Path=/login/**
-            - Path=/register/**
-        - id: userService
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/user/**
+
+zuul:
+  routes:
+    authentication-service:
+      url: http://localhost:8083
+      path: /authentication-service/**
+      serviceId: authentication-service
+      sensitiveHeaders: Cookie,Set-Cookie
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'routes'

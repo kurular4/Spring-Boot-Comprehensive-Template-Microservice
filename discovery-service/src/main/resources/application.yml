@@ -3,10 +3,11 @@ spring:
     name: discovery-service
 server:
   port:
-    8081
+    8761
 eureka:
   client:
     register-with-eureka: false
     fetch-registry: false
-    service-url:
-      defaultZone: http://localhost:8001/eureka
+  server:
+    wait-time-in-ms-when-sync-empty: 0
+    maxThreadsForPeerReplication: 0
