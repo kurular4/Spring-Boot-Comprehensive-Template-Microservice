@@ -48,12 +48,12 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
         String token = Jwts.builder()
                 .setSubject(authResult.getName())
-                .claim("authorities", authResult.getAuthorities())
+                .claim(jwtConstant.getHeader(), authResult.getAuthorities())
                 .setIssuedAt(now)
                 .setExpiration(validity)
                 .signWith(Keys.hmacShaKeyFor(jwtConstant.getSecretKey().getBytes()))
                 .compact();
-        response.addHeader(jwtConstant.getHeader(), jwtConstant.getPrefix() + token);
+        response.addHeader(jwtConstant.getHeader(), jwtConstant.getPrefix() + " " + token);
     }
 
     @Override

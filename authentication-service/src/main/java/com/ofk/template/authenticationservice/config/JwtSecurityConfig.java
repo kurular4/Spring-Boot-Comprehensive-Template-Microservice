@@ -2,6 +2,7 @@ package com.ofk.template.authenticationservice.config;
 
 import com.ofk.template.authenticationservice.filter.AuthenticationFilter;
 import com.ofk.template.authenticationservice.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -46,12 +47,19 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
+                .cors().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilter(new AuthenticationFilter(authenticationManager(), jwtConstant))
+                .addFilter(getAuthenticationFilter())
                 .authorizeRequests()
                 .antMatchers(HttpMethod.PUT, "/signup").permitAll()
+                .antMatchers(HttpMethod.GET, "/test").permitAll()
                 .anyRequest()
                 .authenticated();
+    }
+
+    private AuthenticationFilter getAuthenticationFilter() throws Exception {
+        AuthenticationFilter filter = new AuthenticationFilter(authenticationManager(), jwtConstant);
+        return filter;
     }
 }

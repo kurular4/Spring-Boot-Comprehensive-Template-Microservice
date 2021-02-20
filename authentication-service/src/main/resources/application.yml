@@ -3,9 +3,9 @@ spring:
     mongodb:
       host: localhost
       port: 27017
-      database: user
-      username: root
-      password: root
+      database: authentication
+  application:
+    name: authentication-service
 
 security:
   jwt:
@@ -13,4 +13,14 @@ security:
       secretKey: abcdef123456xy??a??AAAAA?adacvcbcbcbcbcbc
       expirationInDays: 7
       prefix: Bearer
-      header: Authorization
+      header: authorization
+
+server:
+  port: 8083
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+    register-with-eureka: true
+    fetch-registry: true

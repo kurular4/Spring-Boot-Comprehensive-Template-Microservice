@@ -5,10 +5,7 @@ import com.ofk.template.authenticationservice.model.User;
 import com.ofk.template.authenticationservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class PublicController {
@@ -19,8 +16,13 @@ public class PublicController {
         this.userService = userService;
     }
 
-    @PostMapping("signup")
-    public ResponseEntity<User> signup(@RequestBody User user) {
-        return userService.signup(user);
+    @PutMapping("signup")
+    public ResponseEntity<User> signup(@RequestBody UserDTO userDTO) {
+        return userService.signup(userDTO);
+    }
+
+    @GetMapping("test")
+    public String test() {
+        return "hi";
     }
 }

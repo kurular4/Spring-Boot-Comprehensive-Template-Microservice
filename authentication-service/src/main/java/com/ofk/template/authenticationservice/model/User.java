@@ -1,8 +1,7 @@
 package com.ofk.template.authenticationservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,10 +13,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @EqualsAndHashCode(callSuper = true)
-@Data
 @Accessors(chain = true)
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Document(collection = "users")
-@JsonIgnoreProperties(value = {"password"})
 public class User extends Base implements UserDetails {
     private String username;
     private String password;
@@ -31,6 +32,16 @@ public class User extends Base implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.name() + "_ROLE")).collect(Collectors.toSet());
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
     }
 
     @Override
