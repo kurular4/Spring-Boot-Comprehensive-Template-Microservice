@@ -4,8 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ofk.template.authenticationservice.config.JwtConstant;
 import com.ofk.template.authenticationservice.dto.UserDTO;
 import com.ofk.template.authenticationservice.exception.BadCredentialsException;
+import com.ofk.template.authenticationservice.util.JsonUtil;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -58,7 +61,10 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        throw new BadCredentialsException();
-//        super.unsuccessfulAuthentication(request, response, failed);
+//        response.getWriter().write(JsonUtil.convertObjectToJson(ResponseEntity.status(HttpStatus.BAD_REQUEST)));
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        new ObjectMapper().writeValue(response.getOutputStream(), new ResponseEntity<>("", HttpStatus.BAD_REQUEST));
     }
+
+
 }
