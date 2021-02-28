@@ -2,7 +2,7 @@
 <Configuration status="INFO" monitorInterval="30">
 
     <Properties>
-        <Property name="basePath">C:\\logs</Property>
+        <Property name="basePath">C:\\logs</Property> <!--todo fix for generic path -->
     </Properties>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
